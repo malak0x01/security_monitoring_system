@@ -5,9 +5,8 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# ---------------------------
 # DATABASE SETUP
-# ---------------------------
+
 def init_db():
     conn = sqlite3.connect("database.db", timeout=10)
     cursor = conn.cursor()
@@ -52,9 +51,9 @@ def init_db():
 init_db()
 
 
-# ---------------------------
+
 # DETECTION SYSTEM
-# ---------------------------
+
 def detect_attack(username, password):
     data = username + " " + password
 
@@ -102,9 +101,9 @@ def analyze_attack_details(attack_type, username, password):
     return intent, suggestion, risk
 
     
-# ---------------------------
+
 # ALERT SYSTEM
-# ---------------------------
+
 def create_alert(cursor, username, ip, attack_type, password):
     
     intent, suggestion, risk = analyze_attack_details(attack_type, username, password)
@@ -141,9 +140,9 @@ def create_alert(cursor, username, ip, attack_type, password):
     
    
 
-# ---------------------------
+
 # ROUTES
-# ---------------------------
+
 
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -189,9 +188,9 @@ def home():
     return render_template("login.html")
 
 
-# ---------------------------
+
 # VIEW LOGS
-# ---------------------------
+
 @app.route("/logs")
 def show_logs():
     conn = sqlite3.connect("database.db")
@@ -203,9 +202,9 @@ def show_logs():
     return render_template("logs.html", logs=logs)
 
 
-# ---------------------------
+
 # VIEW ALERTS
-# ---------------------------
+
 @app.route("/alerts")
 def show_alerts():
     conn = sqlite3.connect("database.db")
@@ -245,7 +244,7 @@ def dashboard():
         values=values
     )
 
-# ---------------------------
+
 # RUN SERVER
-# ---------------------------
-app.run(debug=True)
+
+app.run(debug=False)
